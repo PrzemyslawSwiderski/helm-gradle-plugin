@@ -1,0 +1,14 @@
+import com.pswidersk.gradle.helm.HelmTask
+
+plugins {
+    id "com.pswidersk.helm-plugin" version "1.0.1"
+}
+
+helmPlugin {
+    helmVersion = "3.2.2"
+}
+
+task(helmHelp, type: HelmTask) {
+    args = ["--help"]
+}
+

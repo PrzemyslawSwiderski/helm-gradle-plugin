@@ -1,7 +1,7 @@
 import com.pswidersk.gradle.helm.HelmTask
 
 plugins {
-    id("com.pswidersk.helm-plugin") version "1.0.0"
+    id("com.pswidersk.helm-plugin") version "1.0.1"
 }
 
 helmPlugin {
@@ -9,11 +9,30 @@ helmPlugin {
 }
 
 tasks {
+
+    register<HelmTask>("helm") {
+        // exec args can be passed by commandline, for example
+        // ./gradlew helm --args="--help"
+    }
+
     register<HelmTask>("helmHelp") {
         args("--help")
     }
 
     register<HelmTask>("helmVersion") {
         args("version")
+    }
+
+    register<HelmTask>("helmCreateMyChart") {
+        args("create", "my-chart")
+    }
+
+    register<HelmTask>("helmUpgradeOrInstallMyChart") {
+        // More available at: https://helm.sh/docs/helm/helm_upgrade/
+        args("upgrade", "--install", "my-chart", "./my-chart",
+                "--namespace", "my-chart", "--create-namespace", "--kube-context", "minikube", "--atomic")
+    }
+    register<HelmTask>("helmStatusMyChart") {
+        args("status", "my-chart", "--namespace", "my-chart")
     }
 }
