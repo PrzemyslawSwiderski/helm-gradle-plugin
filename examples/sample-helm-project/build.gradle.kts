@@ -45,4 +45,17 @@ tasks {
     register<HelmTask>("helmStatus") {
         args("status", "my-chart", "--namespace", "my-chart")
     }
+
+    register<HelmTask>("helmLint") {
+        args("lint", "my-chart", "--namespace", "my-chart")
+    }
+
+    register<HelmTask>("helmTemplate") {
+        args("template", "my-chart", "--namespace", "my-chart")
+    }
+
+    register<HelmTask>("helmUninstall") {
+        args("uninstall", "my-chart", "--namespace", "my-chart")
+    }
+
 }
