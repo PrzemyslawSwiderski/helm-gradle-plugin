@@ -7,28 +7,29 @@ import java.net.URL
 
 open class HelmSetupTask : DefaultTask() {
 
+    private val helmSetupDir = helmSetupDir(project, project.helmPlugin.helmVersion.get())
+
     init {
         group = "helm"
         description = "Helm setup task to install helm client"
+        onlyIf {
+            !helmSetupDir.exists()
+        }
     }
-
-    private val helmSetupDir = helmSetupDir(project, project.helmPlugin.helmVersion.get())
 
     @TaskAction
     fun setup() {
         val os = os()
         val arch = arch()
         val helmVersion = project.helmPlugin.helmVersion.get()
-        if (!helmSetupDir.exists()) {
-            helmSetupDir.mkdirs()
-            val helmPackage = helmSetupDir.resolve("helm-v$helmVersion-$os-$arch.tar.gz")
-            downloadHelmPackage(helmPackage)
-            project.copy {
-                it.from(project.tarTree(helmPackage))
-                it.into(helmSetupDir)
-            }
-            helmPackage.delete()
+        helmSetupDir.mkdirs()
+        val helmPackage = helmSetupDir.resolve("helm-v$helmVersion-$os-$arch.tar.gz")
+        downloadHelmPackage(helmPackage)
+        project.copy {
+            it.from(project.tarTree(helmPackage))
+            it.into(helmSetupDir)
         }
+        helmPackage.delete()
     }
 
     private fun downloadHelmPackage(helmPackage: File) {
