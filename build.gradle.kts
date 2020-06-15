@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     `java-gradle-plugin`
     `maven-publish`
@@ -26,6 +28,9 @@ tasks {
     }
     "afterReleaseBuild"{
         dependsOn("publish", "publishPlugins")
+    }
+    withType<KotlinCompile> {
+        kotlinOptions.jvmTarget = "1.8"
     }
 }
 gradlePlugin {

@@ -19,14 +19,15 @@ open class HelmSetupTask : DefaultTask() {
         val os = os()
         val arch = arch()
         val helmVersion = project.helmPlugin.helmVersion.get()
-        val helmPackage = helmSetupDir.resolve("helm-v$helmVersion-$os-$arch.tar.gz")
-        if (!helmPackage.exists()) {
+        if (!helmSetupDir.exists()) {
             helmSetupDir.mkdirs()
+            val helmPackage = helmSetupDir.resolve("helm-v$helmVersion-$os-$arch.tar.gz")
             downloadHelmPackage(helmPackage)
             project.copy {
                 it.from(project.tarTree(helmPackage))
                 it.into(helmSetupDir)
             }
+            helmPackage.delete()
         }
     }
 
