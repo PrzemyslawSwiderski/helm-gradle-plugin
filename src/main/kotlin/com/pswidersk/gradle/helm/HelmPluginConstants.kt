@@ -3,6 +3,11 @@
 package com.pswidersk.gradle.helm
 
 /**
+ * Version of helm exec to be downloaded.
+ */
+const val HELM_VERSION = "3.3.1"
+
+/**
  * Name of helm plugin extension in projects.
  */
 const val HELM_PLUGIN_EXTENSION_NAME = "helmPlugin"

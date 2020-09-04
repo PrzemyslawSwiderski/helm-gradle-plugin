@@ -14,7 +14,7 @@ All major operating systems such as Linux, Windows, Mac OS are supported.
 ## Usage
 ### Steps to run helm commands by using Gradle
 1. Apply a plugin to a project as described on [gradle portal](https://plugins.gradle.org/plugin/com.pswidersk.helm-plugin).
-2. Configure a plugin by specifying desired helm version in build script:
+2. Configure a plugin by specifying desired helm version in build script (default: `3.3.1`):
     ```kotlin
     helmPlugin {
         helmVersion.set("3.2.2")
@@ -37,3 +37,5 @@ All major operating systems such as Linux, Windows, Mac OS are supported.
     ```
 
 ### Additional examples can be found in `examples` module in this project. 
+
+## [Changelog](./CHANGELOG.md)

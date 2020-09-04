@@ -10,6 +10,6 @@ import javax.inject.Inject
 open class HelmPluginExtension @Inject constructor(project: Project,
                                                    objects: ObjectFactory) {
 
-    val helmVersion: Property<String> = objects.property<String>().convention("3.2.2")
+    val helmVersion: Property<String> = objects.property<String>().convention(HELM_VERSION)
 
 }
