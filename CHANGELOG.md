@@ -3,6 +3,18 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+## [1.0.6] - 2020-09-04
+### Added
 - Task add test with script definition.
 - Dockerfile to test plugin on linux system.
 
