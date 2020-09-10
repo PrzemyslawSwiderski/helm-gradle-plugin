@@ -1,6 +1,6 @@
+import org.jetbrains.changelog.closure
+import org.jetbrains.changelog.date
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import java.text.SimpleDateFormat
-import java.util.*
 
 plugins {
     `java-gradle-plugin`
@@ -8,7 +8,7 @@ plugins {
     kotlin("jvm") version "1.4.0"
     id("com.gradle.plugin-publish") version "0.11.0"
     id("net.researchgate.release") version "2.8.1"
-    id("org.jetbrains.changelog") version "0.4.0"
+    id("org.jetbrains.changelog") version "0.5.0"
 }
 
 repositories {
@@ -63,6 +63,5 @@ publishing {
 }
 
 changelog {
-    headerFormat = "[{0}] - {1}"
-    headerArguments = listOf(version, SimpleDateFormat("yyyy-MM-dd").format(Date()))
+    header = closure { "[${project.version}] - ${date()}" }
 }
