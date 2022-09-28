@@ -40,6 +40,8 @@ internal fun arch(): String {
     val arch = System.getProperty("os.arch")
     return if (arch == "x86_64") {
         "amd64"
+    } else if (arch == "aarch64") {
+      	"arm64"
     } else {
         arch
     }
