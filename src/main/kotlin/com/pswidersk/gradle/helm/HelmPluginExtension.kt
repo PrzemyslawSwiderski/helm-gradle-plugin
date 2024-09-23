@@ -36,11 +36,15 @@ open class HelmPluginExtension @Inject constructor(
     val architecture: Property<String> = objects.property<String>().convention(arch())
 
     val helmPackage: Property<String> = objects.property<String>().convention(
-        "helm-v${helmVersion.get()}-${operatingSystem.get()}-${architecture.get()}.tar.gz"
+        providerFactory.provider {
+            "helm-v${helmVersion.get()}-${operatingSystem.get()}-${architecture.get()}.tar.gz"
+        }
     )
 
     val helmDownloadUrl: Property<String> = objects.property<String>().convention(
-        "https://get.helm.sh/${helmPackage.get()}"
+        providerFactory.provider {
+            "https://get.helm.sh/${helmPackage.get()}"
+        }
     )
 
     val helmExec: RegularFileProperty = objects.fileProperty().convention(
