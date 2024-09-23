@@ -19,7 +19,8 @@ All major operating systems such as Linux, Windows, Mac OS are supported.
 
 1. Apply a plugin to a project as described
    on [gradle portal](https://plugins.gradle.org/plugin/com.pswidersk.helm-plugin).
-2. Configure a plugin by specifying desired helm version in build script:
+2. Configure a plugin by specifying desired helm version in build script.
+   All versions can be checked **[HERE](https://github.com/helm/helm/releases)**.
     ```kotlin
     helmPlugin {
         helmVersion.set("3.16.1")
@@ -47,8 +48,8 @@ All major operating systems such as Linux, Windows, Mac OS are supported.
 
 Plugin behavior can be adjusted by the following properties:
 
-- `helmVersion` - version of Terraform to be downloaded, `1.9.6` by default
-- `helmSetupDir` - Helm installation directory, by default
+- `helmVersion` - version of Helm to download, `3.16.1` by default
+- `helmSetupDir` - installation directory, by default:
   `<project_dir>/.gradle/helmClient-v<helmVersion>`
 - `operatingSystem` - local operating system, `linux` by default
 - `architecture` - system CPU architecture, resolved by `os.arch` system property by default
@@ -57,7 +58,7 @@ Plugin behavior can be adjusted by the following properties:
 - `helmDownloadUrl` - can be used to adjust the download URL directly,
   e.g. `https://releases.hashicorp.com/helm/1.9.6/helm_1.9.6_linux_arm64.zip`, by default it is resolved as
   `https://releases.hashicorp.com/helm/${helmVersion.get()}/${helmPackage.get()}`
-- `helmExec` - helm executable location, `<helmSetupDir>/${operatingSystem.get()}-${architecture.get()}/helm")`
+- `helmExec` - executable location, `<helmSetupDir>/${operatingSystem.get()}-${architecture.get()}/helm")`
 
 Sample configuration block can look like:
 
