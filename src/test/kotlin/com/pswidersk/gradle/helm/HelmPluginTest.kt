@@ -1,10 +1,11 @@
 package com.pswidersk.gradle.helm
 
+import org.assertj.core.api.Assertions.assertThat
 import org.gradle.api.Project
 import org.gradle.testfixtures.ProjectBuilder
 import org.gradle.testkit.runner.GradleRunner
-import org.gradle.testkit.runner.TaskOutcome
-import org.junit.jupiter.api.Assertions
+import org.gradle.testkit.runner.TaskOutcome.SKIPPED
+import org.gradle.testkit.runner.TaskOutcome.SUCCESS
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
@@ -21,15 +22,16 @@ internal class HelmPluginTest {
         project.pluginManager.apply(HelmPlugin::class.java)
 
         assertEquals(1, project.plugins.size)
-        assertEquals(1, project.tasks.size)
+        assertEquals(2, project.tasks.size)
     }
 
     @Test
-    fun `test if terraform setup and version check was successful`() {
+    fun `test if helm setup and version check was successful`() {
         // given
-        val expectedOutputMsg = "v3.3.1+g249e521"
+        val expectedOutputMsg = "v3.16.1+g5a5449d"
         val buildFile = File(tempDir, "build.gradle.kts")
-        buildFile.writeText("""
+        buildFile.writeText(
+            """
             import com.pswidersk.gradle.helm.HelmTask
             
             plugins {
@@ -41,12 +43,13 @@ internal class HelmPluginTest {
                     args("version", "--short")
                 }
             }
-        """.trimIndent())
+        """.trimIndent()
+        )
         val runner = GradleRunner.create()
-                .withPluginClasspath()
-                .withProjectDir(tempDir)
-                .forwardOutput()
-                .withArguments(":runHelmVersionCheck")
+            .withPluginClasspath()
+            .withProjectDir(tempDir)
+            .forwardOutput()
+            .withArguments(":runHelmVersionCheck")
 
         // when
         val firstRunResult = runner.build()
@@ -54,14 +57,14 @@ internal class HelmPluginTest {
 
         // then
         with(firstRunResult) {
-            assertEquals(TaskOutcome.SUCCESS, task(":helmSetup")!!.outcome)
-            assertEquals(TaskOutcome.SUCCESS, task(":runHelmVersionCheck")!!.outcome)
-            Assertions.assertTrue { output.contains(expectedOutputMsg) }
+            assertThat(task(":helmSetup")!!.outcome).isEqualTo(SUCCESS)
+            assertThat(task(":runHelmVersionCheck")!!.outcome).isEqualTo(SUCCESS)
+            assertThat(output).contains(expectedOutputMsg)
         }
         with(secondRunResult) {
-            assertEquals(TaskOutcome.SKIPPED, task(":helmSetup")!!.outcome)
-            assertEquals(TaskOutcome.SUCCESS, task(":runHelmVersionCheck")!!.outcome)
-            Assertions.assertTrue { output.contains(expectedOutputMsg) }
+            assertThat(task(":helmSetup")!!.outcome).isEqualTo(SKIPPED)
+            assertThat(task(":runHelmVersionCheck")!!.outcome).isEqualTo(SUCCESS)
+            assertThat(output).contains(expectedOutputMsg)
         }
     }
 }

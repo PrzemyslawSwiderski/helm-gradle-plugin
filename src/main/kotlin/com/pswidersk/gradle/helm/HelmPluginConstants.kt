@@ -5,7 +5,7 @@ package com.pswidersk.gradle.helm
 /**
  * Version of helm exec to be downloaded.
  */
-const val HELM_VERSION = "3.3.1"
+const val HELM_VERSION = "3.16.1"
 
 /**
  * Name of helm plugin extension in projects.
@@ -28,7 +28,7 @@ const val HELM_SETUP_DIR = "helmClient"
 const val PLUGIN_TASKS_GROUP_NAME = "helm"
 
 /**
- * Name of task to setup helm.
+ * Name of task to set up helm.
  */
 const val HELM_SETUP_TASK_NAME = "helmSetup"
 

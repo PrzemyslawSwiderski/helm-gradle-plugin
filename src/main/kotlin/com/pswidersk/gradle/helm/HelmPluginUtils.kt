@@ -13,7 +13,7 @@ import org.gradle.api.provider.Property
  * @return the property
  */
 internal inline fun <reified T : Any> ObjectFactory.property(): Property<T> =
-        property(T::class.javaObjectType)
+    property(T::class.javaObjectType)
 
 /**
  * Gets the [HelmPluginExtension] that is installed on the project.
@@ -41,12 +41,8 @@ internal fun arch(): String {
     return if (arch == "x86_64") {
         "amd64"
     } else if (arch == "aarch64") {
-      	"arm64"
+        "arm64"
     } else {
         arch
     }
 }
-
-internal fun helmSetupDir(project: Project, helmVersion: String) = project.rootDir.resolve(GRADLE_FILES_DIR).resolve("$HELM_SETUP_DIR-v$helmVersion")
-
-internal fun helmExec(project: Project, helmVersion: String) = "${helmSetupDir(project, helmVersion)}/${os()}-${arch()}/helm"

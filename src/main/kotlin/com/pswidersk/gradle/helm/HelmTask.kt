@@ -9,7 +9,7 @@ open class HelmTask : AbstractExecTask<HelmTask>(HelmTask::class.java) {
     init {
         group = PLUGIN_TASKS_GROUP_NAME
         dependsOn(HELM_SETUP_TASK_NAME)
-        executable = helmExec(project, project.helmPlugin.helmVersion.get())
+        executable = project.helmPlugin.helmExec.get().asFile.absolutePath
     }
 
     /**

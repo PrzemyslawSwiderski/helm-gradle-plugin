@@ -1,59 +1,45 @@
-import org.jetbrains.changelog.closure
-import org.jetbrains.changelog.date
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-    `java-gradle-plugin`
-    `maven-publish`
-    kotlin("jvm") version "1.4.0"
-    id("com.gradle.plugin-publish") version "0.11.0"
-    id("net.researchgate.release") version "2.8.1"
-    id("org.jetbrains.changelog") version "0.5.0"
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.pluginPublish)
+    alias(libs.plugins.changelog)
 }
 
 repositories {
     mavenLocal()
-    jcenter()
-    maven {
-        setUrl("https://plugins.gradle.org/m2/")
-    }
+    gradlePluginPortal()
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
+    implementation(gradleKotlinDsl())
+    testImplementation(libs.jupiter)
+    testImplementation(libs.jupiterParams)
+    testImplementation(libs.assertj)
+}
 
-    testImplementation("org.junit.jupiter:junit-jupiter:5.6.2")
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+    }
 }
 
 tasks {
     test {
         useJUnitPlatform()
     }
-    "afterReleaseBuild"{
-        dependsOn("publish", "publishPlugins")
-    }
-    "beforeReleaseBuild"{
-        dependsOn("patchChangelog")
-    }
-    withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "1.8"
-    }
 }
+
 gradlePlugin {
+    website = "https://github.com/PrzemyslawSwiderski/helm-gradle-plugin"
+    vcsUrl = "https://github.com/PrzemyslawSwiderski/helm-gradle-plugin"
     plugins {
         create("helm-gradle-plugin") {
             id = "com.pswidersk.helm-plugin"
             implementationClass = "com.pswidersk.gradle.helm.HelmPlugin"
-            displayName = "Simple Gradle plugin to wrap Helm executable as task. https://github.com/PrzemyslawSwiderski/helm-gradle-plugin"
+            displayName = "Simple Plugin to wrap Helm executable as task."
+            description = "Simple Plugin to wrap Helm executable as task."
+            tags = listOf("helm", "kubernetes", "kubectl")
         }
     }
-}
-
-pluginBundle {
-    website = "https://github.com/PrzemyslawSwiderski/helm-gradle-plugin"
-    vcsUrl = "https://github.com/PrzemyslawSwiderski/helm-gradle-plugin"
-    description = "Simple Gradle plugin to wrap Helm executable as task."
-    tags = listOf("helm", "kubernetes", "kubectl")
 }
 
 publishing {
@@ -62,6 +48,8 @@ publishing {
     }
 }
 
+// Configuring changelog Gradle plugin https://github.com/JetBrains/gradle-changelog-plugin
 changelog {
-    header = closure { "[${project.version}] - ${date()}" }
+    groups = listOf("Added", "Changed", "Removed")
 }
+

@@ -5,7 +5,7 @@ plugins {
 }
 
 helmPlugin {
-    helmVersion.set("3.2.3")
+    helmVersion = "3.2.3"
 }
 
 tasks {
@@ -20,7 +20,7 @@ tasks {
     }
 
     register<HelmTask>("helmVersion") {
-        args("version","--short")
+        args("version", "--short")
     }
 
     register<HelmTask>("helmCreate") {
@@ -33,13 +33,17 @@ tasks {
 
     register<HelmTask>("helmUpgradeOrInstallToMinikube") {
         // More available at: https://helm.sh/docs/helm/helm_upgrade/
-        args("upgrade", "--install", "my-chart", "./my-chart",
-                "--namespace", "my-chart", "--create-namespace", "--kube-context", "minikube", "--atomic")
+        args(
+            "upgrade", "--install", "my-chart", "./my-chart",
+            "--namespace", "my-chart", "--create-namespace", "--kube-context", "minikube", "--atomic"
+        )
     }
 
     register<HelmTask>("helmUpgradeOrInstallToDockerDesktop") {
-        args("upgrade", "--install", "my-chart", "./my-chart",
-                "--namespace", "my-chart", "--create-namespace", "--kube-context", "docker-desktop", "--atomic")
+        args(
+            "upgrade", "--install", "my-chart", "./my-chart",
+            "--namespace", "my-chart", "--create-namespace", "--kube-context", "docker-desktop", "--atomic"
+        )
     }
 
     register<HelmTask>("helmStatus") {
