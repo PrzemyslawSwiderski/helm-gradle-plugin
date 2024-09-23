@@ -1,7 +1,7 @@
 import com.pswidersk.gradle.helm.HelmTask
 
 plugins {
-    id("com.pswidersk.helm-plugin") version "1.0.6"
+    id("com.pswidersk.helm-plugin") version "1.1.1"
 }
 
 helmPlugin {
