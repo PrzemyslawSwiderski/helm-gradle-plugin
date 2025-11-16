@@ -29,8 +29,8 @@ class ListPropertiesTest {
             .withProjectDir(tempDir)
             .forwardOutput()
             .withArguments(":listPluginProperties")
-        val expectedSetupPath = tempDir.resolve(".gradle").resolve("helmClient-v3.16.1")
-        val expectedPackageName = "helm-v3.16.1-${os()}-${arch()}.tar.gz"
+        val expectedSetupPath = tempDir.resolve(".gradle").resolve("helmClient-v4.0.0")
+        val expectedPackageName = "helm-v4.0.0-${os()}-${arch()}.tar.gz"
         val expectedExecPath = expectedSetupPath.resolve("${os()}-${arch()}").resolve("helm")
 
         // when
@@ -40,7 +40,7 @@ class ListPropertiesTest {
         with(runResult) {
             assertThat(task(":listPluginProperties")!!.outcome).isEqualTo(TaskOutcome.SUCCESS)
             assertThat(output).contains(
-                "Helm version: 3.16.1",
+                "Helm version: 4.0.0",
                 "Setup directory: ${expectedSetupPath.absolutePath}",
                 "System: ${os()}",
                 "Arch: ${arch()}",

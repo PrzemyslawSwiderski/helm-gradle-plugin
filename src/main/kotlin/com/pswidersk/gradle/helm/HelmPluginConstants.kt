@@ -4,8 +4,9 @@ package com.pswidersk.gradle.helm
 
 /**
  * Version of helm exec to be downloaded.
+ * Check https://github.com/helm/helm/releases for available versions.
  */
-const val HELM_VERSION = "3.16.1"
+const val HELM_VERSION = "4.0.0"
 
 /**
  * Name of helm plugin extension in projects.

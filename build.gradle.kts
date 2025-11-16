@@ -1,8 +1,12 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     alias(libs.plugins.kotlin)
     alias(libs.plugins.pluginPublish)
-    alias(libs.plugins.changelog)
 }
+
+version = System.getenv("PLUGIN_VERSION") ?: "unspecified"
 
 repositories {
     mavenLocal()
@@ -17,14 +21,17 @@ dependencies {
 }
 
 java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(11)
-    }
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 tasks {
     test {
         useJUnitPlatform()
+    }
+    withType<KotlinCompile> {
+        compilerOptions {
+            jvmTarget = JvmTarget.JVM_11
+        }
     }
 }
 
@@ -46,10 +53,5 @@ publishing {
     repositories {
         mavenLocal()
     }
-}
-
-// Configuring changelog Gradle plugin https://github.com/JetBrains/gradle-changelog-plugin
-changelog {
-    groups = listOf("Added", "Changed", "Removed")
 }
 

@@ -13,7 +13,12 @@ class GradleSupportTest {
     @TempDir
     lateinit var tempDir: File
 
-    @ValueSource(strings = ["7.5", "6.2"])
+    @ValueSource(
+        strings = [
+            "8.4",
+            "7.5"
+        ]
+    )
     @ParameterizedTest
     fun `test if plugin is working for older gradle versions`(gradleVersion: String) {
         // given
