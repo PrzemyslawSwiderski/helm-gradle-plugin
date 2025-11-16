@@ -6,6 +6,12 @@ include(
 )
 
 pluginManagement {
+    val pluginVersionForExamples: String by settings
+
+    plugins {
+        id("com.pswidersk.helm-plugin") version pluginVersionForExamples
+    }
+
     repositories {
         mavenLocal()
         gradlePluginPortal()

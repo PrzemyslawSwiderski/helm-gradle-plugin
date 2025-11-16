@@ -1,3 +1,6 @@
+[![🥁 Build](https://github.com/PrzemyslawSwiderski/helm-gradle-plugin/actions/workflows/build.yml/badge.svg)](https://github.com/PrzemyslawSwiderski/helm-gradle-plugin/actions/workflows/build.yml)
+[![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/PrzemyslawSwiderski/helm-gradle-plugin?label=Plugin%20Version&sort=semver&style=plastic)](https://plugins.gradle.org/plugin/com.pswidersk.helm-plugin)
+
 # [Gradle Helm plugin](https://plugins.gradle.org/plugin/com.pswidersk.helm-plugin)
 
 ## About
@@ -23,7 +26,7 @@ All major operating systems such as Linux, Windows, Mac OS are supported.
    All versions can be checked **[HERE](https://github.com/helm/helm/releases)**.
     ```kotlin
     helmPlugin {
-        helmVersion.set("3.16.1")
+        helmVersion.set("4.0.0")
     }
     ```
 3. Define a task to run desired helm client command, for example:
@@ -48,7 +51,7 @@ All major operating systems such as Linux, Windows, Mac OS are supported.
 
 Plugin behavior can be adjusted by the following properties:
 
-- `helmVersion` - version of Helm to download, `3.16.1` by default
+- `helmVersion` - version of Helm to download, `4.0.0` by default
 - `helmSetupDir` - installation directory, by default:
   `<project_dir>/.gradle/helmClient-v<helmVersion>`
 - `operatingSystem` - local operating system, `linux` by default

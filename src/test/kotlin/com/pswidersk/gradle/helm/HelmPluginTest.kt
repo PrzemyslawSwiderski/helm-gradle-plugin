@@ -28,7 +28,7 @@ internal class HelmPluginTest {
     @Test
     fun `test if helm setup and version check was successful`() {
         // given
-        val expectedOutputMsg = "v3.16.1+g5a5449d"
+        val expectedOutputMsg = "v4.0.0+g99cd196"
         val buildFile = File(tempDir, "build.gradle.kts")
         buildFile.writeText(
             """
