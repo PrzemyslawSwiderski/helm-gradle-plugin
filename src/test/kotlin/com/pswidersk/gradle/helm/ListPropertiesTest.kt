@@ -99,9 +99,9 @@ class ListPropertiesTest {
 
     private fun sysDepPath(inputFile: File): String {
         return if (Os.isFamily(Os.FAMILY_MAC)) {
-            File("/private").resolve(inputFile).absolutePath
+            "/private${inputFile.path}"
         } else {
-            inputFile.absolutePath
+            inputFile.path
         }
     }
 
