@@ -1,13 +1,12 @@
 package com.pswidersk.gradle.helm
 
+import org.apache.tools.ant.taskdefs.condition.Os
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.TaskOutcome
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 import java.io.File
-import kotlin.io.writeText
-import kotlin.text.trimIndent
 
 class ListPropertiesTest {
     @TempDir
@@ -41,12 +40,12 @@ class ListPropertiesTest {
             assertThat(task(":listPluginProperties")!!.outcome).isEqualTo(TaskOutcome.SUCCESS)
             assertThat(output).contains(
                 "Helm version: 4.0.0",
-                "Setup directory: ${expectedSetupPath.absolutePath}",
+                "Setup directory: ${sysDepPath(expectedSetupPath)}",
                 "System: ${os()}",
                 "Arch: ${arch()}",
                 "Helm package: $expectedPackageName",
                 "Helm download URL: https://get.helm.sh/$expectedPackageName",
-                "Helm exec location: ${expectedExecPath.absolutePath}"
+                "Helm exec location: ${sysDepPath(expectedExecPath)}"
             )
         }
     }
@@ -88,13 +87,21 @@ class ListPropertiesTest {
             assertThat(task(":listPluginProperties")!!.outcome).isEqualTo(TaskOutcome.SUCCESS)
             assertThat(output).contains(
                 "Helm version: 4.10.0-alpha",
-                "Setup directory: ${expectedSetupPath.absolutePath}",
+                "Setup directory: ${sysDepPath(expectedSetupPath)}",
                 "System: Linux",
                 "Arch: arm64",
                 "Helm package: $expectedPackageName",
                 "Helm download URL: https://proxy-helm/helm.zip",
-                "Helm exec location: ${expectedExecPath.absolutePath}"
+                "Helm exec location: ${sysDepPath(expectedExecPath)}"
             )
+        }
+    }
+
+    private fun sysDepPath(inputFile: File): String {
+        return if (Os.isFamily(Os.FAMILY_MAC)) {
+            File("/private").resolve(inputFile).absolutePath
+        } else {
+            inputFile.absolutePath
         }
     }
 
