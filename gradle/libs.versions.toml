@@ -4,7 +4,7 @@ junit = "6.0.2"
 assertj = "3.27.7"
 
 # plugins
-kotlin = "2.3.0"
+kotlin = "2.3.10"
 pluginPublish = "2.0.0"
 
 [libraries]
