@@ -1,6 +1,6 @@
 [versions]
 # libraries
-junit = "6.0.2"
+junit = "6.0.3"
 assertj = "3.27.7"
 
 # plugins
