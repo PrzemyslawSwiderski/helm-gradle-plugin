@@ -1,10 +1,12 @@
 package com.pswidersk.gradle.helm
 
 import org.gradle.api.DefaultTask
+import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.TaskAction
 import java.net.URI
 
-open class HelmSetupTask : DefaultTask() {
+@CacheableTask
+abstract class HelmSetupTask : DefaultTask() {
 
     private val helmSetupDir = project.helmPlugin.helmSetupDir.get().asFile
 
